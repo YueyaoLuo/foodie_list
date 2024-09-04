@@ -27,25 +27,25 @@
 let map;
 
 async function initMap() {
-  // The location of Uluru
-  const position = { lat: -10, lng: 131.031 };
+  // The location of Melbourne
+  const position = { lat: -37.8136, lng: 144.9631 };
   // Request needed libraries.
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-  // The map, centered at Uluru
+  // The map, centered at Melbourne
   map = new Map(document.getElementById("map"), {
     zoom: 4,
     center: position,
     mapId: "DEMO_MAP_ID",
   });
 
-  // The marker, positioned at Uluru
+  // The marker, positioned at Melbourne
   const marker = new AdvancedMarkerElement({
     map: map,
     position: position,
-    title: "Uluru",
+    title: "Melbourne",
   });
 }
 
