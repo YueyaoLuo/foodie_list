@@ -30,9 +30,9 @@
         <div class="upload-area" id="upload-area">
           <label for="photo-upload" class="upload-label" id="upload-label">
             Click here to upload a photo
-            <input type="file" id="photo-upload" class="file-input" name="photo" accept="image/*" onchange="handleFileUpload()" />
+            <input type="file" id="photo-upload" class="file-input" name="photo" accept="image/*"/>
           </label>
-          <img id="image-preview" class="image-preview" /> <!-- Placeholder for image preview -->
+          <img id="image-preview" class="image-preview" />
         </div>
         
         <!-- Warning message, hidden by default -->
@@ -109,7 +109,7 @@
 
             <div id="edit-{{ review.id }}" style="display: none;">
 
-              <form method="post" action="{% url 'update_review' review.id %}" class="review-form">
+              <form method="post" action="{% url 'update_review' review.id %}" id="review-form">
                 {% csrf_token %}
                 <select class="form-select" name="stars" aria-label="Default select example"
                   placeholder="{{ review.stars }}">                 
@@ -129,7 +129,7 @@
                 </div>
               </form>
 
-              <form method="post" action="{% url 'delete_review' review.id %}" class="review-form">
+              <form method="post" action="{% url 'delete_review' review.id %}" id="review-form">
                 {% csrf_token %}
                 <input type="hidden" name="review_id" value="{{ review.id }}">
                 <button class="btn btn-outline-danger" type="submit">Delete Review</button>
