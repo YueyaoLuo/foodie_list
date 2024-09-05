@@ -55,10 +55,22 @@
     <div class="card">
       <div class="row g-0">
         <div class="col-md-4">
-          <div id="display-{{ review.id }}">
+          <div id="display-{{ review.id }}-carousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
             {% for photo in review.photo_set.all %}
-            <img src="{{ photo.url }}" class="img-fluid rounded-start" alt="Review Image" />
+            <div class="carousel-item active">
+            <img src="{{ photo.url }}" class="img-thumbnail" alt="Review Image" />
+            </div>
             {% endfor %}
+            {% if review.photo.length > 1%}
+            <a class="carousel-control-prev" href="#display-{{ review.id }}-carousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>              
+            </a>
+            <a class="carousel-control-next" href="#display-{{ review.id }}-carousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </a>
+            {% endif %}
+          </div>
           </div>
         </div>
         <div class="col-md-8">
@@ -83,35 +95,36 @@
               <p class="card-text">{{review.comments}}</p>
               
               {% if review.user == request.user %}
-              <button onclick="showEditForm({{ review.id }})" class="btn btn-light">Edit</button>
+              <button  id="edit-btn" onclick="showEditForm({{ review.id }})" class="btn btn-link">Edit</button>
               {% endif %}
             </div>
 
             <div id="edit-{{ review.id }}" style="display: none;">
 
-              <form method="post" action="{% url 'update_review' review.id %}">
+              <form method="post" action="{% url 'update_review' review.id %}" class="review-form">
                 {% csrf_token %}
                 <select class="form-select" name="stars" aria-label="Default select example"
-                  placeholder="{{ review.stars }}">
-                  <option selected>New Rating</option>
-                  <option value="1">1 star</option>
-                  <option value="2">2 stars</option>
-                  <option value="3">3 stars</option>
-                  <option value="4">4 stars</option>
-                  <option value="5">5 stars</option>
+                  placeholder="{{ review.stars }}">                 
+                  <option value="1" {% if review.stars == 1 %}selected{% endif %}>1 star</option>
+                  <option value="2" {% if review.stars == 2 %}selected{% endif %}>2 stars</option>
+                  <option value="3" {% if review.stars == 3 %}selected{% endif %}>3 stars</option>
+                  <option value="4" {% if review.stars == 4 %}selected{% endif %}>4 stars</option>
+                  <option value="5" {% if review.stars == 5 %}selected{% endif %}>5 stars</option>
                 </select>
 
                 New Comment: <input type="text" name="comments" value="{{ review.comments }}"
                   placeholder="New Comment here">
                 <input type="hidden" name="review_id" value="{{ review.id }}">
-                <button class="btn btn-primary" type="submit">Save</button>
-                <button class="btn btn-light" type="button" onclick="hideEditForm({{ review.id }})">Cancel</button>
+                <div class="button-group">
+                <button class="btn btn-outline-warning" type="submit">Save</button>
+                <button id="cancel-btn" class="btn btn-outline-secondary" type="button" onclick="hideEditForm({{ review.id }})">Cancel</button>
+                </div>
               </form>
 
-              <form method="post" action="{% url 'delete_review' review.id %}">
+              <form method="post" action="{% url 'delete_review' review.id %}" class="review-form">
                 {% csrf_token %}
                 <input type="hidden" name="review_id" value="{{ review.id }}">
-                <button class="btn btn-danger" type="submit">Delete Review</button>
+                <button class="btn btn-outline-danger" type="submit">Delete Review</button>
               </form>
 
             </div>
@@ -165,13 +178,17 @@
 
   <script>
     function showEditForm(reviewId) {
-      document.getElementById('display-' + reviewId).style.display = 'none';
+      document.getElementById('display-' + reviewId + '-carousel').style.display = 'none';
       document.getElementById('edit-' + reviewId).style.display = 'block';
+      document.getElementById('edit-btn').style.display = 'none';
+      // document.getElementById('cancel-btn').style.display = 'block';
     }
 
     function hideEditForm(reviewId) {
       document.getElementById('edit-' + reviewId).style.display = 'none';
-      document.getElementById('display-' + reviewId).style.display = 'block';
+      document.getElementById('display-' + reviewId + '-carousel').style.display = 'block';
+      document.getElementById('edit-btn').style.display = 'block';
+      
     }
   </script>
 

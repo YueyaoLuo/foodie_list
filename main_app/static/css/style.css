@@ -207,18 +207,28 @@ footer .social_icon li a:hover {
   position: relative;
 }
 
-.btn-light{
+.btn-link{
   position: absolute;
-  right: 10px;
-  bottom: 10px;
-  --bs-btn-bg:#cccccc;
+  right: 16px;
+  bottom: 16px;
+  color: grey;
 }
 
-.btn-light-revise{
+.btn-link:hover{
+  color:darkgrey;
+}
+
+.btn-outline-danger{
   position: absolute;
-  right: 0px;
-  bottom: 0px;
-  --bs-btn-bg:#cccccc;
+  right: 16px;
+  bottom: 16px;
+}
+
+
+.button-group {
+  display: flex;
+  justify-content: flex-start; /* Align buttons to the left (can also use center or space-between) */
+  gap: 10px; /* Add some space between the buttons */
 }
 
 .card{
@@ -234,6 +244,11 @@ footer .social_icon li a:hover {
 
 }
 
+.img-thumbnail{
+  border: none;
+  margin: 10px;
+  width:100%;
+}
 
 .star-rating-display .star {
   color: #ddd;
@@ -257,7 +272,12 @@ footer .social_icon li a:hover {
   display: inline-block;
 }
 
-
+.review-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
 
 /* style for map */
 #map{
