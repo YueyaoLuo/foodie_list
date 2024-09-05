@@ -10,8 +10,9 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-5 col-md-6">
-      <form action="{% url 'add_review' place_details.place_id %}" method="POST" enctype="multipart/form-data">
+      <form id="review-form" action="{% url 'add_review' place_details.place_id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
+        
         <select class="form-select" name="stars" aria-label="Default select example">
           <option selected>Rate the restaurant</option>
           <option value="1">1 star</option>
@@ -20,27 +21,34 @@
           <option value="4">4 stars</option>
           <option value="5">5 stars</option>
         </select>
-        <br />
+        
         <div class="form-floating">
-
-          <textarea class="form-control" name="comments" placeholder="Leave a review here"
-            id="floatingTextarea"></textarea>
-
+          <textarea class="form-control" name="comments" placeholder="Leave a review here" id="floatingTextarea"></textarea>
           <label for="floatingTextarea">Leave a review here</label>
         </div>
+        
+        <div class="upload-area" id="upload-area">
+          <label for="photo-upload" class="upload-label" id="upload-label">
+            Click here to upload a photo
+            <input type="file" id="photo-upload" class="file-input" name="photo" accept="image/*" onchange="handleFileUpload()" />
+          </label>
+          <img id="image-preview" class="image-preview" /> <!-- Placeholder for image preview -->
+        </div>
+        
+        <!-- Warning message, hidden by default -->
+        <div id="photo-warning" class="alert alert-danger" style="display: none;">
+          Please upload a photo before submitting the review.
+        </div>
 
-        <input type="file" class="btn btn-secondary" value="Add a Photo" name="photo" />
-        <br />
-        <br>
+        <div id="format-warning" class="alert alert-danger" style="display: none;">
+          Invalid file format. Please upload a valid image file (JPG, PNG).
+        </div>
+    
         <input type="submit" class="btn btn-primary" value="Leave a Review" />
       </form>
-      {% for photo in restaurant.photo_set.all %}
-      <img class="responsive-img card-panel" src="{{ photo.url }}" />
-      {% empty %}
-      <div class="card-panel teal-text center-align">No Photos Uploaded</div>
-      {% endfor %}
-
+    
     </div>
+    
     <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
       <div id="map" style="height: 400px; width: 100%"></div>
     </div>
@@ -177,19 +185,71 @@
 
 
   <script>
+
+    // show or hide the editing review form
     function showEditForm(reviewId) {
       document.getElementById('display-' + reviewId + '-carousel').style.display = 'none';
       document.getElementById('edit-' + reviewId).style.display = 'block';
       document.getElementById('edit-btn').style.display = 'none';
-      // document.getElementById('cancel-btn').style.display = 'block';
     }
 
     function hideEditForm(reviewId) {
       document.getElementById('edit-' + reviewId).style.display = 'none';
       document.getElementById('display-' + reviewId + '-carousel').style.display = 'block';
       document.getElementById('edit-btn').style.display = 'block';
-      
     }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+  const fileInput = document.getElementById('photo-upload');
+  const imagePreview = document.getElementById('image-preview');
+  const warningMessage = document.getElementById('photo-warning');
+  const formatWarningMessage = document.getElementById('format-warning');
+
+  // Handle file input change event
+  fileInput.addEventListener('change', function() {
+    const file = fileInput.files[0];
+
+    // Check if a file is selected
+    if (file) {
+      // Check if the file is a valid image format (JPG or PNG)
+      if (file.type === 'image/jpeg' || file.type === 'image/png') {
+        formatWarningMessage.style.display = 'none'; // Hide invalid format warning
+        
+        const fileReader = new FileReader();
+        fileReader.onload = function(event) {
+          imagePreview.src = event.target.result;
+          imagePreview.style.display = 'block'; // Show image preview
+        };
+        fileReader.readAsDataURL(file); // Read the image file
+      } else {
+        // Show invalid format warning and hide the image preview
+        formatWarningMessage.style.display = 'block';
+        imagePreview.style.display = 'none';
+        imagePreview.src = ''; // Clear any previous preview
+      }
+    }
+  });
+
+document.getElementById('review-form').addEventListener('submit', function(event) {
+  const photoInput = document.getElementById('photo-upload');
+  const warningMessage = document.getElementById('photo-warning');
+
+  // Check if a file is selected
+  if (photoInput.files.length === 0) {
+    // Prevent form submission
+    event.preventDefault();
+
+    // Show warning message
+    warningMessage.style.display = 'block';
+  } else {
+    // Hide the warning message if a photo is attached
+    warningMessage.style.display = 'none';
+  }
+});
+});
+
+
   </script>
 
   {% endblock %}

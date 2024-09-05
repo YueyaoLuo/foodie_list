@@ -203,6 +203,67 @@ footer .social_icon li a:hover {
   --bs-btn-active-border-color: #a38231;
 }
 
+/* create review */
+.form-control{
+  width: 100%;
+}
+
+#review-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.upload-area {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  position: relative;
+  transition: border-color 0.3s ease;
+  height:200px;
+}
+
+.upload-label {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+}
+
+.file-input {
+  display: none; /* Hide the actual input element */
+}
+
+.upload-area:hover {
+  border-color: #aaa; /* Change border color on hover */
+}
+
+.image-previews {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.image-preview {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+}
+
+
+
+
+.alert-danger{
+  margin-top: 16px;
+}
+
+/* show review */
 .reivew{
   position: relative;
 }
@@ -272,12 +333,7 @@ footer .social_icon li a:hover {
   display: inline-block;
 }
 
-.review-form{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 16px;
-}
+
 
 /* style for map */
 #map{
