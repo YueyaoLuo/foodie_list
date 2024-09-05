@@ -1,7 +1,7 @@
 let autocomplete;
 function initMap() {
 
-  console.log("hello")
+  // console.log("hello")
   const center = { lat: 50.064192, lng: -130.605469 };
   // Create a bounding box with sides ~10km away from the center point
   const defaultBounds = {
