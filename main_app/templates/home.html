@@ -18,7 +18,7 @@
     <a href="{% url 'places_details' restaurant.place_id %}">
         <div class="col mb-3 h-100">
             <div class="card h-100">
-                <img src="{{ restaurant.photo_url }}" class="card-img-top" alt="restaurant cover">
+                <img src="{{ restaurant.photo_url }}" class="card-img-top h-100" alt="restaurant cover">
                 <div class="card-body">
                     <h5 class="card-title">{{ restaurant.name }}</h5>
                     <p class="card-text">{{ restaurant.address }}</p>
