@@ -7,7 +7,7 @@ In the digital age, online reviews play a crucial role in shaping dining decisio
 
 
 
-### overview:
+### Overview:
 - Search for Restaurants: Connects with Google Places API to locate restaurants and retrieve detailed information about each location.
 - Post Authentic Reviews: Users are encouraged to provide honest feedback by posting reviews, which must include a photo to verify their dining experience.
 - (UPCOMING) Save Favorite Restaurants and Foodie Map: Users can compile a personalized list of their favorite restaurants and generate an overall map for all saved restaurants for easy access. 
@@ -23,16 +23,25 @@ Python + Django + AWS S3 + Google Places Api + Bootstrap
 - [DeploymentURL] (https://mysite-6ttg.onrender.com)
 
 
-"""
+'
 username: foodie
 password: 9876qwer
-
-"""
+'
 
 ### Screenshots
+Search your interested restaurant and see the place detail</br>
+![gif](./main_app/gif/search%20place.gif)
+Create your review for the restaurant with image</br>
+![gif](./main_app/gif/create%20review.gif)
+Warining when leave review without an image or not in JPEG/PNG format</br>
+![gif](./main_app/gif/warning.gif)
+Edit or delete your review</br>
+![gif](./main_app/gif/edit%20review.gif)
+
 
 ### Next Steps
-1. Save favorite restaurants to my list
-2. Show saved restaurants on my Foodie map
+1. Upload multiple photos and delete photo when doing review, edit review photo
+2. Save favorite restaurants to my list
+3. Show saved restaurants on my Foodie map
 
 
