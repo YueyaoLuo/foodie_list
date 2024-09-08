@@ -161,7 +161,8 @@ footer .social_icon li a:hover {
 }
 
 /* style for home page */
-.form-control {
+
+#pac-input{
   width: 65%;
   display: inline-block;
 }
