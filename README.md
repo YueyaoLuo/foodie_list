@@ -23,10 +23,11 @@ Python + Django + AWS S3 + Google Places Api + Bootstrap
 - [DeploymentURL] (https://mysite-6ttg.onrender.com)
 
 
-'
+```
+
 username: foodie
 password: 9876qwer
-'
+```
 
 ### Screenshots
 Search your interested restaurant and see the place detail</br>
