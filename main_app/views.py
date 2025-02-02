@@ -15,12 +15,14 @@ from .models import Restaurant
 import requests
 import os
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 
 # Create your views here.
 def home(request):
   restaurants = Restaurant.objects.all()
   context = {
+    "GOOGLE_API_KEY": os.getenv("GOOGLE_API_KEY"),
     'restaurants': restaurants
     }
   
@@ -44,10 +46,17 @@ def signup(request):
 
 def places_details(request, place_id):
   api_key = config('GOOGLE_API_KEY')
+  if not api_key:
+    return JsonResponse({"error": "GOOGLE_API_KEY is missing"}, status=500)
+
   place_details_url = f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&key={api_key}'
   response = requests.get(place_details_url)
   place_details = response.json().get('result', {})
-
+  if not place_details:
+    return JsonResponse({"error": "No place details found in API response"}, status=500)
+  
+  
+  
   name= place_details.get('name')
   address= place_details.get('formatted_address')
   location= place_details.get('geometry').get('location')
@@ -92,6 +101,9 @@ def myLists(request):
 
 @login_required
 def myMap(request):
+  context = {
+    "GOOGLE_API_KEY": os.getenv("GOOGLE_API_KEY"),  # Pass API key from .env
+    }
   return render(request, 'myMap.html')
 
 # add review form
