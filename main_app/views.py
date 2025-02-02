@@ -102,9 +102,9 @@ def myLists(request):
 @login_required
 def myMap(request):
   context = {
-    "GOOGLE_API_KEY": os.getenv("GOOGLE_API_KEY"),  # Pass API key from .env
+    "GOOGLE_API_KEY": os.getenv("GOOGLE_API_KEY"),
     }
-  return render(request, 'myMap.html')
+  return render(request, 'myMap.html', context)
 
 # add review form
 def add_review(request, place_id):
